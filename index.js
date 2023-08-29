@@ -8,6 +8,7 @@ let eraseBtn = document.getElementById("erase-btn");
 let paintBtn = document.getElementById("paint-btn");
 let widthValue = document.getElementById("width-value");
 let heightValue = document.getElementById("height-value");
+let downloadBtn = document.getElementById("download-btn");
 
 let events = {
     mouse: {
@@ -81,6 +82,8 @@ gridButton.addEventListener("click", () => {
         container.appendChild(div);
 
     }
+
+    downloadBtn.style.display = "block";
 });
 
 function checker(elementId) {
@@ -98,6 +101,7 @@ function checker(elementId) {
 
 clearGridButton.addEventListener("click", () => {
     container.innerHTML = "";
+    downloadBtn.style.display = "none";
 });
 
 eraseBtn.addEventListener("click", () => {
@@ -121,4 +125,17 @@ window.onload = () => {
     gridHeight.value = 0;
     gridWidth.value = 0;
 };
+
+
+downloadBtn.addEventListener("click", () => {
+    const grille = document.querySelector(".container")
+    html2canvas(grille).then((canvas) => {
+        const base64Image = canvas.toDataURL("image/png");
+        var anchor = document.createElement("a");
+        anchor.setAttribute("href", base64Image);
+        anchor.setAttribute("download", "grille.png")
+        anchor.click();
+        anchor.remove();
+    })
+});
 
